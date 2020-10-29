@@ -1,16 +1,15 @@
 name: Add to track-pr Project
 on:
   pull_request:
-    branches:
-      - master
 jobs:
   github-actions-automate-projects:
     runs-on: ubuntu-latest
     steps:
-    - name: add-new-prs-to-repository-based-project-column
+    - name: add-new-prs-to-master
       uses: docker://takanabe/github-actions-automate-projects:v0.0.1
-      if: github.event_name == 'pull_request' && github.event.action == 'opened'
+      if: github.event_name == 'pull_request' && github.event.action == 'opened' && github.event.pull_request.base.ref == 'master'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_PROJECT_URL: https://github.com/moleske/funtimes/projects/1
         GITHUB_PROJECT_COLUMN_NAME: Open
+
